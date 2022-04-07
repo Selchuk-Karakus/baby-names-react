@@ -39,6 +39,29 @@ hr {
   margin-bottom: 5rem;
 }
 
+.searchBar-wrapper {
+  padding: 1rem;
+  
+}
+
+.searchBar-label {
+  font-weight: 700;
+  margin-right: 1rem;
+}
+
+.searchBar-inputField {
+  padding: 0.4rem;
+  border: solid rgb(10, 208, 162) 0.2rem;
+}
+
+::placeholder {
+    color: rgb(197, 0, 171);
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

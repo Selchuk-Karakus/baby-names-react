@@ -1,17 +1,17 @@
 import React from "react";
 
-const SearchBar = (props) => {
-console.log(props)
+const SearchBar = ({handleChange, input}) => {
 
   return (
-    <div>
-        <label htmlFor="name">Search:</label>
+    <div className="searchBar-wrapper">
+        <label className="searchBar-label" htmlFor="name">Search:</label>
         <input 
+        className="searchBar-inputField"
         placeholder="Search Name"
         id="name" 
         type="text" 
-        value={props.input}
-        onChange={props.handleInputChange} />
+        value={input}
+        onChange={handleChange} />
     </div>
   );
 };

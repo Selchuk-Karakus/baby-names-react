@@ -1,27 +1,35 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import data from "./data/baby-names-data.json";
+import dataFile from "./data/baby-names-data.json";
 import BabyNameList from "./BabyNameList";
 import SearchBar from "./SearchBar";
 
 function App() {
   const [input, setInput] = useState("");
+  const [namesData] = useState([...dataFile]);
+  const [filteredNames, setFilteredNames] = useState([]);
+
+  namesData.sort((personA, personB) => {
+      return personA.name > personB.name ? 1 : -1
+    })
 
   const handleChange = (e) => {
     e.preventDefault();
-    setInput(e.target.value.toLowerCase());
+    setInput(e.target.value);
   };
 
-  if (input.length > 0) {
-    data = data.filter((person) => {
-      return person.name.toLowerCase().match(input);
-    });
-  }
-   
+  useEffect(() => {
+    setFilteredNames(
+      namesData.filter((person) => {
+        return person.name.toLowerCase().match(input);
+      })
+    );
+  }, [input]);
+
   return (
     <div className="App">
-      <SearchBar data={data} handleInput={handleChange} input={input}/>
-      <BabyNameList data={data} />
+      <SearchBar handleChange={handleChange} input={input} />
+      <BabyNameList data={filteredNames} />
       <hr />
     </div>
   );
