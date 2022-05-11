@@ -1,6 +1,6 @@
 import React from "react";
 
-const SearchBar = ({handleChange, input}) => {
+const SearchBar = ({handleOnChange, input}) => {
 
   return (
     <div className="searchBar-wrapper">
@@ -11,7 +11,7 @@ const SearchBar = ({handleChange, input}) => {
         id="name" 
         type="text" 
         value={input}
-        onChange={handleChange} />
+        onChange={handleOnChange} />
     </div>
   );
 };

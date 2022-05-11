@@ -13,7 +13,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  padding: 5rem;
+  padding: 1rem;
 }
 
 .list-item {
@@ -41,7 +41,6 @@ hr {
 
 .searchBar-wrapper {
   padding: 1rem;
-  
 }
 
 .searchBar-label {
@@ -55,11 +54,18 @@ hr {
 }
 
 ::placeholder {
-    color: rgb(197, 0, 171);
+  color: rgb(197, 0, 171);
 }
 
 input:focus::placeholder {
   color: transparent;
+}
+
+.fav-list-tittle {
+  align-self: center;
+  color: rgb(12, 130, 130);
+  font-weight: 800;
+  margin-left: 5px;
 }
 
 @media (prefers-reduced-motion: no-preference) {

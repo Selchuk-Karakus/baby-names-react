@@ -1,35 +1,53 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import dataFile from "./data/baby-names-data.json";
+import babyNamesData from "./data/baby-names-data.json";
 import BabyNameList from "./BabyNameList";
 import SearchBar from "./SearchBar";
+import FavouriteNamesList from "./FavouriteNamesList";
 
 function App() {
-  const [input, setInput] = useState("");
-  const [namesData] = useState([...dataFile]);
-  const [filteredNames, setFilteredNames] = useState([]);
+  const [inputField, setInputField] = useState("");
+  const [favouriteName, setFavouriteName] = useState([]);
 
-  namesData.sort((personA, personB) => {
-      return personA.name > personB.name ? 1 : -1
+  const filteredBabyNames = babyNamesData
+    .sort((personA, personB) => {
+      return personA.name > personB.name ? 1 : -1;
     })
-
-  const handleChange = (e) => {
+    .filter((babyData) => {
+      return (
+        babyData.name.toLowerCase().indexOf(inputField.toLowerCase()) !== -1
+      );
+    });
+  
+  const handleInputFieldOnChange = (e) => {
     e.preventDefault();
-    setInput(e.target.value);
+    setInputField(e.target.value);
   };
 
-  useEffect(() => {
-    setFilteredNames(
-      namesData.filter((person) => {
-        return person.name.toLowerCase().match(input);
+  const handleAddNameToFavClick = (babyName) => {
+    if (!favouriteName.includes(babyName.id))
+      setFavouriteName([...favouriteName, babyName]);
+  };
+
+  const handleRemoveNameFromFavClick = (babyName) => {
+    setFavouriteName(
+      favouriteName.filter((favName) => {
+        return favName.id !== babyName.id;
       })
     );
-  }, [input]);
+  };
 
   return (
     <div className="App">
-      <SearchBar handleChange={handleChange} input={input} />
-      <BabyNameList data={filteredNames} />
+      <SearchBar handleOnChange={handleInputFieldOnChange} input={inputField} />
+      <FavouriteNamesList
+        data={favouriteName}
+        removeFavName={handleRemoveNameFromFavClick}
+      />
+      <BabyNameList
+        data={filteredBabyNames}
+        handleClick={handleAddNameToFavClick}
+      />
       <hr />
     </div>
   );
