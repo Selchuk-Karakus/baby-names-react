@@ -8,24 +8,32 @@ import FavouriteNamesList from "./FavouriteNamesList";
 function App() {
   const [inputField, setInputField] = useState("");
   const [favouriteName, setFavouriteName] = useState([]);
+  const [filteredBabyNames, setFilteredBabyNames] = useState(babyNamesData);
 
-  const filteredBabyNames = babyNamesData
-    .sort((personA, personB) => {
-      return personA.name > personB.name ? 1 : -1;
-    })
-    .filter((babyData) => {
-      return (
-        babyData.name.toLowerCase().indexOf(inputField.toLowerCase()) !== -1
-      );
-    });
-  
+  useEffect(() => {
+    const babyNames = babyNamesData
+      .sort((personA, personB) => {
+        return personA.name > personB.name ? 1 : -1;
+      })
+      .filter((babyData) => {
+        return (
+          babyData.name.toLowerCase().indexOf(inputField.toLowerCase()) !== -1
+        );
+      })
+      .filter((babyName) => {
+        return !favouriteName.includes(babyName);
+      });
+
+    setFilteredBabyNames(babyNames);
+  }, [inputField, favouriteName]);
+
   const handleInputFieldOnChange = (e) => {
     e.preventDefault();
     setInputField(e.target.value);
   };
 
   const handleAddNameToFavClick = (babyName) => {
-    if (!favouriteName.includes(babyName.id))
+    if (!favouriteName.includes(babyName))
       setFavouriteName([...favouriteName, babyName]);
   };
 
