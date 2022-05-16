@@ -4,11 +4,13 @@ import babyNamesData from "./data/baby-names-data.json";
 import BabyNameList from "./BabyNameList";
 import SearchBar from "./SearchBar";
 import FavouriteNamesList from "./FavouriteNamesList";
+import GenderFilter from "./GenderFilter";
 
 function App() {
   const [inputField, setInputField] = useState("");
   const [favouriteName, setFavouriteName] = useState([]);
   const [filteredBabyNames, setFilteredBabyNames] = useState(babyNamesData);
+  const [filteredGender, setFilteredGender] = useState("b");
 
   useEffect(() => {
     const babyNames = babyNamesData
@@ -22,10 +24,13 @@ function App() {
       })
       .filter((babyName) => {
         return !favouriteName.includes(babyName);
+      })
+      .filter((babyData) => {
+        return babyData.sex !== filteredGender;
       });
 
     setFilteredBabyNames(babyNames);
-  }, [inputField, favouriteName]);
+  }, [inputField, favouriteName, filteredGender]);
 
   const handleInputFieldOnChange = (e) => {
     e.preventDefault();
@@ -45,8 +50,16 @@ function App() {
     );
   };
 
+  const handleGenderInputOnChange = (e) => {
+    setFilteredGender(e.target.value);
+  };
+
   return (
     <div className="App">
+      <GenderFilter
+        gender={filteredGender}
+        handleOnchange={handleGenderInputOnChange}
+      />
       <SearchBar handleOnChange={handleInputFieldOnChange} input={inputField} />
       <FavouriteNamesList
         data={favouriteName}
